@@ -22,7 +22,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-app.get("/todos",(req,res)=>{
+app.get("/",(req,res)=>{
 res.send("Todo application")
 })
 connectionDb();
