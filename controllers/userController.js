@@ -1,4 +1,4 @@
-const { userRegister, userLogin, logoutUser, getUserProfile} = require("../services/userServices");
+const { userRegister, userLogin, logoutUser, getUserProfile } = require("../services/userServices");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -20,16 +20,15 @@ const register = async (req, res) => {
 
         const token = jwt.sign(
             { data: { id: user._id, email: user.email } },
-            process.env.SECRET_KEY
+            process.env.SECRET_KEY,{ expiresIn: "1d" }
         );
         console.log("Generated token:", token);
 
 
-        res.cookie("token", token, {
+       res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "strict",
-            // maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days in milliseconds
+            secure: true, // ✅ Required for Vercel HTTPS
+            sameSite: "none", // ✅ Allows cross-origin cookie sharing
             maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
         res.status(201).json({ message });
@@ -58,12 +57,12 @@ const login = async (req, res) => {
         console.log("Generated token:", token);
 
 
-       res.cookie("token", token, {
-  httpOnly: true,
-  secure: true, // ✅ Required for Vercel HTTPS
-  sameSite: "none", // ✅ Allows cross-origin cookie sharing
-  maxAge: 24 * 60 * 60 * 1000 // 1 day
-});
+        res.cookie("token", token, {
+            httpOnly: true,
+            secure: true, // ✅ Required for Vercel HTTPS
+            sameSite: "none", // ✅ Allows cross-origin cookie sharing
+            maxAge: 24 * 60 * 60 * 1000 // 1 day
+        });
         return res.status(200).json({
             message,
             user: { id: user._id, email: user.email }

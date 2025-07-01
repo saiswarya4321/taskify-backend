@@ -19,12 +19,12 @@ const findTodo=async(userId)=>{
 }
 
 
-const updateTodo = async ({ id, name, description, eventDate, user }) => {
+const updateTodo = async ({ id, name, description, eventDate}) => {
     if (!id) {
         throw new Error("Id not found");
     }
 
-    const updatedTodo = await updateTodoById(id, { name, description, eventDate, user });
+    const updatedTodo = await updateTodoById(id, { name, description, eventDate });
 
     if (!updatedTodo) {
         throw new Error("Todo not updated");

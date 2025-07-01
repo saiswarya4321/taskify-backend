@@ -1,15 +1,15 @@
 const todo = require("../models/todoModel");
 
-const saveTodo= async(todos)=>{
+const saveTodo = async (todos) => {
     try {
-       const newTodo= new todo(todos) 
-       return await newTodo.save();
+        const newTodo = new todo(todos)
+        return await newTodo.save();
     } catch (error) {
-       console.log("Error in repository:", error.message); 
+        console.log("Error in repository:", error.message);
     }
 }
-const getTodoByUserId=async(userId)=>{
-    return await todo.find({user:userId})
+const getTodoByUserId = async (userId) => {
+    return await todo.find({ user: userId })
 }
 
 
@@ -33,9 +33,9 @@ const deleteTodoById = async (id, user) => {
 };
 
 const getTodoByUserAndId = async ({ id, user }) => {
-    return await todo.findOne({ _id: id, user});
+    return await todo.findOne({ _id: id, user });
 };
 
-module.exports={
-    saveTodo,getTodoByUserId,updateTodoById,deleteTodoById,getTodoByUserAndId
+module.exports = {
+    saveTodo, getTodoByUserId, updateTodoById, deleteTodoById, getTodoByUserAndId
 }
