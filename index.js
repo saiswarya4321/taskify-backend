@@ -13,7 +13,7 @@ const app=express();
 app.use(cookie());
 
 app.use(cors({
-    origin: 'https://taskify-frontend-theta.vercel.app',  
+    origin: ['https://taskify-frontend-theta.vercel.app', 'http://localhost:5173'],
     credentials: true,
     optionsSuccessStatus: 200 
 }));
