@@ -58,13 +58,12 @@ const login = async (req, res) => {
         console.log("Generated token:", token);
 
 
-        res.cookie("token", token, {
-            httpOnly: true,
-            secure: false,
-            sameSite: "strict",
-            maxAge: 24 * 60 * 60 * 1000 // 1 day
-
-        });
+       res.cookie("token", token, {
+  httpOnly: true,
+  secure: true, // ✅ Required for Vercel HTTPS
+  sameSite: "none", // ✅ Allows cross-origin cookie sharing
+  maxAge: 24 * 60 * 60 * 1000 // 1 day
+});
         return res.status(200).json({
             message,
             user: { id: user._id, email: user.email }
