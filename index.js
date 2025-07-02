@@ -10,6 +10,7 @@ const bodyParser = require('body-parser');
 
 
 const app=express();
+app.use(express.json());
 app.use(cookie());
 
 app.use(cors({
@@ -18,7 +19,9 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
 }));
 
-app.use(express.json());
+app.use((req, res) => {
+    res.status(404).json({ message: 'Route not found' });
+});
 
 
 

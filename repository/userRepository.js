@@ -21,7 +21,6 @@ const save = async (user) => {
 }
 
 
-
 const findUserById = async (id) => {
     try {
         return await userDb.findOne({ _id:id }).select('-password');

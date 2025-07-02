@@ -41,9 +41,7 @@ const userLogin = async ({ email, password }) => {
         }
         const passwordMatch = await bcrypt.compare(password, userExist.password)
         if (!passwordMatch) {
-            return res.status(404).json({
-                message: "user login failed"
-            })
+           throw new Error("Invalid password");
 
         }
         return { user: userExist, message: "Login successful" };
