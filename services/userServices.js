@@ -27,7 +27,7 @@ const logoutUser = async (res) => {
     res.clearCookie("token", {
       httpOnly: true,
       sameSite: "strict",
-      secure: false, // match with how you set the cookie during login
+     secure: true, // match with how you set the cookie during login
     });
   } catch (err) {
     throw new Error("Logout failed");

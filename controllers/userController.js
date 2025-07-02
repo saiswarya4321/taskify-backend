@@ -29,7 +29,7 @@ const register = async (req, res) => {
             httpOnly: true,
             secure: true, // ✅ Required for Vercel HTTPS
             sameSite: "none", // ✅ Allows cross-origin cookie sharing
-            maxAge: 24 * 60 * 60 * 1000 // 1 day
+            // maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
         res.status(201).json({ message });
         console.log("Saved successfully")
@@ -61,7 +61,7 @@ const login = async (req, res) => {
             httpOnly: true,
             secure: true, // ✅ Required for Vercel HTTPS
             sameSite: "none", // ✅ Allows cross-origin cookie sharing
-            maxAge: 24 * 60 * 60 * 1000 // 1 day
+           
         });
         return res.status(200).json({
             message,
@@ -95,5 +95,12 @@ const userProfile = async (req, res, next) => {
         next(error);
     }
 }
+const checkLogin=((req, res) => {
+  if (req.user) {  // assuming you have JWT middleware that sets req.user
+    return res.json({ loggedIn: true });
+  } else {
+    return res.json({ loggedIn: false });
+  }
+});
 
-module.exports = { register, login, logout, userProfile }
+module.exports = { register, login, logout, userProfile ,checkLogin}
