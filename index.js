@@ -1,15 +1,13 @@
-
-const express=require("express")
-require("dotenv").config()
-const cookie=require("cookie-parser");
+const express = require("express");
+require("dotenv").config();
+const cookie = require("cookie-parser");
 const { connectionDb } = require("./config/db");
 const { userRouter } = require("./routes/userRoutes");
 const { todoRouter } = require("./routes/todoRoutes");
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
-
-const app=express();
+const app = express();
 app.use(express.json());
 app.use(cookie());
 
@@ -19,27 +17,28 @@ app.use(cors({
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
 }));
 
+// Connect database
+connectionDb();
+
+// Routes
+app.use("/user", userRouter);
+app.use("/todo", todoRouter);
+
+// Health check route
+app.get("/", (req, res) => {
+    res.send("Todo application");
+});
+
+// Body log middleware
+app.use((req, res, next) => {
+    console.log("BODY RECEIVED:", req.body);
+    next();
+});
+
+// 404 Handler
 app.use((req, res) => {
     res.status(404).json({ message: 'Route not found' });
 });
 
-
-
-app.get("/",(req,res)=>{
-res.send("Todo application")
-})
-connectionDb();
-
-
-app.use("/user",userRouter);
-app.use("/todo",todoRouter)
-
-app.use((req, res, next) => {
-  console.log("BODY RECEIVED:", req.body);
-  next();
-});
-
-const port=process.env.PORT || 5000
-app.listen(port,()=>{
-    console.log(`Server is running on http://localhost:${port}`)
-})
+// ✅ Export the app instead of listening
+module.exports = app;
