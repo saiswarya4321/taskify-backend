@@ -10,6 +10,7 @@ const register = async (req, res) => {
     try {
 
         const { email, password } = req.body;
+
         if (!email || !password) {
             return res.status(400).json({ message: "All fields are required!" })
         }
@@ -31,7 +32,7 @@ const register = async (req, res) => {
             sameSite: "none", // ✅ Allows cross-origin cookie sharing
              maxAge: 24 * 60 * 60 * 1000 // 1 day
         });
-        res.status(201).json({ message });
+       res.status(201).json({  message,user: { id: user._id, email: user.email } });
         console.log("Saved successfully")
     } catch (error) {
         console.error('Error registering user:', error.message);
@@ -41,6 +42,7 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log("Login request body:", req.body);
         if (!email || !password) {
             return res.status(400).json({ message: "All fields are required!" })
         }

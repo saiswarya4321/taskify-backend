@@ -1,20 +1,22 @@
 
 const userDb=require("../models/userModel");
 
-const findEmail=async (email)=>{
-try {
-    return await userDb.findOne({email})
-} catch (error) {
-    console.log(error)
-}
+const findEmail = async (email) => {
+    try {
+        return await userDb.findOne({ email });
+    } catch (error) {
+        console.log(error);
+        throw new Error("Database error while finding email");
+    }
 }
 
-const save=async(user)=>{
+const save = async (user) => {
     try {
-        const newUser= new userDb(user)
+        const newUser = new userDb(user);
         return await newUser.save();
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        throw new Error("Database error while saving user");
     }
 }
 

@@ -15,11 +15,11 @@ app.use(cookie());
 app.use(cors({
     origin: ['https://taskify-frontend-theta.vercel.app', 'http://localhost:5173'],
     credentials: true,
-    optionsSuccessStatus: 200 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
 }));
 
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 
 app.get("/",(req,res)=>{
